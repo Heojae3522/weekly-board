@@ -217,7 +217,7 @@
   <div class="legend">
     <span style="font-size:11px;color:var(--text-tertiary);">범례</span>
     <div class="legend-item"><div class="legend-box" style="background:var(--green-fill);border:0.5px solid var(--green-border);"></div>영상제작완료</div>
-    <div class="legend-item"><div class="legend-box" style="background:var(--red-fill);border:0.5px solid var(--red-border);"></div>유튜브업로드완료</div>
+    <div class="legend-item"><div class="legend-box" style="background:var(--red-fill);border:0.5px solid var(--red-border);"></div>SNS업로드완료</div>
   </div>
 </div>
 
@@ -500,9 +500,9 @@ function render(){
         cell.className='check-cell'+(isToday?' today-col':'')+(isLastTask?' last':'');
         const btn=document.createElement('div');
         btn.className='check-icon'+(task.ychecks[dk]?' cy':'')+(isEditMode?' editable':'');
-        btn.title='유튜브업로드완료';btn.setAttribute('role','checkbox');
+        btn.title='SNS업로드완료';btn.setAttribute('role','checkbox');
         if(isEditMode){btn.setAttribute('tabindex','0');btn.addEventListener('click',()=>{task.ychecks[dk]=!task.ychecks[dk];saveToFirebase();render();});btn.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter')btn.click();});}
-        btn.innerHTML=`<i class="ti ti-brand-youtube"></i>`;
+        btn.innerHTML=`<i class="ti ti-brand-instagram"></i>`;
         cell.appendChild(btn);cell.appendChild(makeMemo(task,dk,'y'));
         grid.appendChild(cell);
       });
