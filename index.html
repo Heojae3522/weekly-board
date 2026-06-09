@@ -7,369 +7,103 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #ffffff;
-    --bg-secondary: #f7f7f5;
-    --bg-info: #e6f1fb;
-    --text-primary: #1a1a18;
-    --text-secondary: #6b6b68;
-    --text-tertiary: #9e9e9b;
-    --text-info: #185fa5;
-    --border: rgba(0,0,0,0.12);
-    --border-hover: rgba(0,0,0,0.25);
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --green-fill: #C0DD97;
-    --green-border: #639922;
-    --green-text: #27500A;
-    --red-fill: #F7C1C1;
-    --red-border: #E24B4A;
-    --red-text: #791F1F;
+    --bg: #ffffff; --bg-secondary: #f7f7f5; --bg-info: #e6f1fb;
+    --text-primary: #1a1a18; --text-secondary: #6b6b68; --text-tertiary: #9e9e9b;
+    --text-info: #185fa5; --border: rgba(0,0,0,0.12); --border-hover: rgba(0,0,0,0.25);
+    --radius-md: 8px; --radius-lg: 12px;
+    --green-fill: #C0DD97; --green-border: #639922; --green-text: #27500A;
+    --red-fill: #F7C1C1; --red-border: #E24B4A; --red-text: #791F1F;
   }
-
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #1e1e1c;
-      --bg-secondary: #2a2a28;
-      --bg-info: #0c2a4a;
-      --text-primary: #e8e8e4;
-      --text-secondary: #9e9e9a;
-      --text-tertiary: #6a6a67;
-      --text-info: #85b7eb;
-      --border: rgba(255,255,255,0.1);
-      --border-hover: rgba(255,255,255,0.22);
-      --green-fill: #27500A;
-      --green-border: #639922;
-      --green-text: #C0DD97;
-      --red-fill: #501313;
-      --red-border: #E24B4A;
-      --red-text: #F7C1C1;
+      --bg: #1e1e1c; --bg-secondary: #2a2a28; --bg-info: #0c2a4a;
+      --text-primary: #e8e8e4; --text-secondary: #9e9e9a; --text-tertiary: #6a6a67;
+      --text-info: #85b7eb; --border: rgba(255,255,255,0.1); --border-hover: rgba(255,255,255,0.22);
+      --green-fill: #27500A; --green-border: #639922; --green-text: #C0DD97;
+      --red-fill: #501313; --red-border: #E24B4A; --red-text: #F7C1C1;
     }
   }
-
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    min-height: 100vh;
-    padding: 20px 16px 40px;
-  }
-
-  .top-bar {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-
-  .app-title {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--text-primary);
-  }
-
-  .week-nav {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-left: auto;
-  }
-  .week-nav button {
-    width: 28px; height: 28px;
-    border-radius: var(--radius-md);
-    border: 0.5px solid var(--border-hover);
-    background: var(--bg);
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text-secondary);
-    font-size: 14px;
-    transition: background 0.15s;
-  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Apple SD Gothic Neo', sans-serif; background: var(--bg-secondary); color: var(--text-primary); min-height: 100vh; padding: 20px 16px 40px; }
+  .top-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .app-title { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+  .sync-status { font-size: 11px; color: var(--text-tertiary); display: flex; align-items: center; gap: 4px; }
+  .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: #639922; }
+  .sync-dot.offline { background: #E24B4A; }
+  .week-nav { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+  .week-nav button { width: 28px; height: 28px; border-radius: var(--radius-md); border: 0.5px solid var(--border-hover); background: var(--bg); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 14px; transition: background 0.15s; }
   .week-nav button:hover { background: var(--bg-secondary); }
-  .week-label {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-primary);
-    min-width: 148px;
-    text-align: center;
-  }
-
-  .add-client-btn {
-    display: flex; align-items: center; gap: 5px;
-    font-size: 12px;
-    color: var(--text-secondary);
-    border: 0.5px dashed var(--border-hover);
-    border-radius: var(--radius-md);
-    background: transparent;
-    padding: 5px 12px;
-    cursor: pointer;
-    transition: background 0.12s;
-  }
+  .week-label { font-size: 13px; font-weight: 500; color: var(--text-primary); min-width: 148px; text-align: center; }
+  .add-client-btn { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-secondary); border: 0.5px dashed var(--border-hover); border-radius: var(--radius-md); background: transparent; padding: 5px 12px; cursor: pointer; transition: background 0.12s; }
   .add-client-btn:hover { background: var(--bg); }
-
-  .client-block {
-    margin-bottom: 14px;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    background: var(--bg);
-    overflow: hidden;
-  }
-
-  .client-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 9px 14px;
-    background: var(--bg-secondary);
-    border-bottom: 0.5px solid var(--border);
-  }
-
-  .client-name-area {
-    display: flex; align-items: center; gap: 8px;
-  }
-  .client-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .client-name {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-primary);
-    border: none;
-    background: transparent;
-    outline: none;
-    cursor: text;
-    min-width: 60px;
-    max-width: 180px;
-  }
-  .client-name:focus {
-    background: var(--bg);
-    border-radius: 4px;
-    padding: 1px 5px;
-  }
-
-  .client-actions {
-    display: flex; gap: 6px; align-items: center;
-  }
-  .small-btn {
-    font-size: 11px;
-    color: var(--text-secondary);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-md);
-    background: transparent;
-    padding: 3px 8px;
-    cursor: pointer;
-    display: flex; align-items: center; gap: 3px;
-    transition: background 0.1s;
-  }
+  .client-block { margin-bottom: 14px; border: 0.5px solid var(--border); border-radius: var(--radius-lg); background: var(--bg); overflow: hidden; }
+  .client-header { display: flex; align-items: center; justify-content: space-between; padding: 9px 14px; background: var(--bg-secondary); border-bottom: 0.5px solid var(--border); }
+  .client-name-area { display: flex; align-items: center; gap: 8px; }
+  .client-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .client-name { font-size: 13px; font-weight: 500; color: var(--text-primary); border: none; background: transparent; outline: none; cursor: text; min-width: 60px; max-width: 180px; }
+  .client-name:focus { background: var(--bg); border-radius: 4px; padding: 1px 5px; }
+  .client-actions { display: flex; gap: 6px; align-items: center; }
+  .small-btn { font-size: 11px; color: var(--text-secondary); border: 0.5px solid var(--border); border-radius: var(--radius-md); background: transparent; padding: 3px 8px; cursor: pointer; display: flex; align-items: center; gap: 3px; transition: background 0.1s; }
   .small-btn:hover { background: var(--bg-secondary); }
-  .del-client-btn {
-    font-size: 11px;
-    color: var(--text-tertiary);
-    border: none;
-    background: none;
-    cursor: pointer;
-    padding: 3px 5px;
-    border-radius: var(--radius-md);
-    transition: background 0.1s, color 0.1s;
-  }
+  .del-client-btn { font-size: 11px; color: var(--text-tertiary); border: none; background: none; cursor: pointer; padding: 3px 5px; border-radius: var(--radius-md); transition: background 0.1s, color 0.1s; }
   .del-client-btn:hover { background: #FCEBEB; color: #A32D2D; }
-
-  .task-grid {
-    display: grid;
-    grid-template-columns: 170px repeat(7, 1fr);
-    font-size: 12px;
-    min-width: 600px;
-  }
-
-  .overflow-wrapper {
-    overflow-x: auto;
-  }
-
-  .col-header-spacer {
-    padding: 6px 12px;
-    border-bottom: 0.5px solid var(--border);
-    font-size: 11px;
-    color: var(--text-tertiary);
-  }
-  .day-header-cell {
-    padding: 5px 4px 6px;
-    text-align: center;
-    border-bottom: 0.5px solid var(--border);
-    border-left: 0.5px solid var(--border);
-  }
-  .day-name {
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--text-tertiary);
-    display: block;
-  }
-  .day-num {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center; justify-content: center;
-    width: 22px; height: 22px;
-    margin: 2px auto 0;
-    border-radius: 50%;
-  }
+  .overflow-wrapper { overflow-x: auto; }
+  .task-grid { display: grid; grid-template-columns: 170px repeat(7, 1fr); font-size: 12px; min-width: 600px; }
+  .col-header-spacer { padding: 6px 12px; border-bottom: 0.5px solid var(--border); font-size: 11px; color: var(--text-tertiary); }
+  .day-header-cell { padding: 5px 4px 6px; text-align: center; border-bottom: 0.5px solid var(--border); border-left: 0.5px solid var(--border); }
+  .day-name { font-size: 10px; font-weight: 500; color: var(--text-tertiary); display: block; }
+  .day-num { font-size: 13px; font-weight: 500; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; margin: 2px auto 0; border-radius: 50%; }
   .day-header-cell.today .day-name { color: var(--text-info); }
-  .day-header-cell.today .day-num {
-    background: var(--bg-info);
-    color: var(--text-info);
-  }
-
-  .task-label-wrap {
-    display: flex;
-    flex-direction: column;
-    padding: 7px 10px 7px 12px;
-    gap: 4px;
-    border-bottom: 0.5px solid var(--border);
-    position: relative;
-  }
+  .day-header-cell.today .day-num { background: var(--bg-info); color: var(--text-info); }
+  .task-label-wrap { display: flex; flex-direction: column; padding: 7px 10px 7px 12px; gap: 4px; border-bottom: 0.5px solid var(--border); position: relative; }
   .task-row:last-child .task-label-wrap { border-bottom: none; }
-
-  .task-title-row {
-    display: flex; align-items: center; gap: 4px;
-  }
-  .task-title-input {
-    font-size: 12px;
-    color: var(--text-primary);
-    border: none;
-    background: transparent;
-    outline: none;
-    width: 100%;
-    cursor: text;
-    font-family: inherit;
-  }
-  .task-title-input:focus {
-    background: var(--bg-secondary);
-    border-radius: 3px;
-    padding: 1px 4px;
-  }
-  .del-task-btn {
-    font-size: 10px;
-    color: var(--text-tertiary);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 1px 2px;
-    border-radius: 3px;
-    opacity: 0;
-    transition: opacity 0.1s;
-    flex-shrink: 0;
-  }
+  .task-title-row { display: flex; align-items: center; gap: 4px; }
+  .task-title-input { font-size: 12px; color: var(--text-primary); border: none; background: transparent; outline: none; width: 100%; cursor: text; font-family: inherit; }
+  .task-title-input:focus { background: var(--bg-secondary); border-radius: 3px; padding: 1px 4px; }
+  .del-task-btn { font-size: 10px; color: var(--text-tertiary); background: none; border: none; cursor: pointer; padding: 1px 2px; border-radius: 3px; opacity: 0; transition: opacity 0.1s; flex-shrink: 0; }
   .task-label-wrap:hover .del-task-btn { opacity: 1; }
   .del-task-btn:hover { color: #A32D2D; }
-
-  .status-badges {
-    display: flex; gap: 4px; flex-wrap: wrap;
-  }
-  .badge {
-    font-size: 10px;
-    padding: 1px 5px;
-    border-radius: 3px;
-    font-weight: 500;
-    white-space: nowrap;
-    border: 0.5px solid var(--border);
-    background: var(--bg-secondary);
-    color: var(--text-tertiary);
-  }
-  .badge-video.active {
-    background: var(--green-fill);
-    color: var(--green-text);
-    border-color: var(--green-border);
-  }
-  .badge-yt.active {
-    background: var(--red-fill);
-    color: var(--red-text);
-    border-color: var(--red-border);
-  }
-
-  .check-cell {
-    border-bottom: 0.5px solid var(--border);
-    border-left: 0.5px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    padding: 5px 3px;
-  }
+  .status-badges { display: flex; gap: 4px; flex-wrap: wrap; }
+  .badge { font-size: 10px; padding: 1px 5px; border-radius: 3px; font-weight: 500; white-space: nowrap; border: 0.5px solid var(--border); background: var(--bg-secondary); color: var(--text-tertiary); }
+  .badge-video.active { background: var(--green-fill); color: var(--green-text); border-color: var(--green-border); }
+  .badge-yt.active { background: var(--red-fill); color: var(--red-text); border-color: var(--red-border); }
+  .check-cell { border-bottom: 0.5px solid var(--border); border-left: 0.5px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 5px 3px; }
   .task-row:last-child .check-cell { border-bottom: none; }
-  .check-cell.today-col {
-    background: rgba(23, 93, 185, 0.03);
-  }
-
-  .check-icon {
-    width: 18px; height: 18px;
-    border-radius: 4px;
-    border: 0.5px solid var(--border-hover);
-    background: transparent;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.12s, border-color 0.12s;
-    flex-shrink: 0;
-    user-select: none;
-  }
+  .check-cell.today-col { background: rgba(23,93,185,0.03); }
+  .check-icon { width: 18px; height: 18px; border-radius: 4px; border: 0.5px solid var(--border-hover); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.12s, border-color 0.12s; flex-shrink: 0; user-select: none; }
   .check-icon:hover { border-color: var(--border-hover); background: var(--bg-secondary); }
   .check-icon i { font-size: 11px; display: none; }
   .check-icon.cv i, .check-icon.cy i { display: block; }
-  .check-icon.cv {
-    background: var(--green-fill);
-    border-color: var(--green-border);
-  }
+  .check-icon.cv { background: var(--green-fill); border-color: var(--green-border); }
   .check-icon.cv i { color: var(--green-text); }
-  .check-icon.cy {
-    background: var(--red-fill);
-    border-color: var(--red-border);
-  }
+  .check-icon.cy { background: var(--red-fill); border-color: var(--red-border); }
   .check-icon.cy i { color: var(--red-text); }
-
-  .sep-dot {
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--border);
-    flex-shrink: 0;
-  }
-
-  .legend {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-top: 14px;
-    padding-top: 12px;
-    border-top: 0.5px solid var(--border);
-  }
-  .legend-item {
-    display: flex; align-items: center; gap: 5px;
-    font-size: 11px;
-    color: var(--text-secondary);
-  }
-  .legend-box {
-    width: 11px; height: 11px;
-    border-radius: 3px;
-  }
+  .sep-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+  .legend { display: flex; align-items: center; gap: 14px; margin-top: 14px; padding-top: 12px; border-top: 0.5px solid var(--border); }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-secondary); }
+  .legend-box { width: 11px; height: 11px; border-radius: 3px; }
+  .loading { text-align: center; padding: 40px; color: var(--text-tertiary); font-size: 13px; }
 </style>
 </head>
 <body>
 
 <div class="top-bar">
   <span class="app-title">📋 주간 작업 현황</span>
+  <div class="sync-status">
+    <div class="sync-dot" id="sync-dot"></div>
+    <span id="sync-text">연결 중...</span>
+  </div>
   <div class="week-nav">
-    <button id="prev-btn" aria-label="이전 주"><i class="ti ti-chevron-left"></i></button>
+    <button id="prev-btn"><i class="ti ti-chevron-left"></i></button>
     <span class="week-label" id="week-label"></span>
-    <button id="next-btn" aria-label="다음 주"><i class="ti ti-chevron-right"></i></button>
+    <button id="next-btn"><i class="ti ti-chevron-right"></i></button>
   </div>
   <button class="add-client-btn" id="add-client-btn">
     <i class="ti ti-plus" style="font-size:12px;"></i> 클라이언트 추가
   </button>
 </div>
 
-<div id="board"></div>
+<div id="board"><div class="loading">데이터 불러오는 중...</div></div>
 
 <div class="legend">
   <span style="font-size:11px;color:var(--text-tertiary);">범례</span>
@@ -383,199 +117,183 @@
   </div>
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD7xOzi7wuaJkmP2FNAKZTZr1lHYAMn8Ec",
+  authDomain: "weekly-board-4c870.firebaseapp.com",
+  databaseURL: "https://weekly-board-4c870-default-rtdb.firebaseio.com",
+  projectId: "weekly-board-4c870",
+  storageBucket: "weekly-board-4c870.firebasestorage.app",
+  messagingSenderId: "954997789363",
+  appId: "1:954997789363:web:5f241e872a775b549f56c6",
+  measurementId: "G-P748CHRQC2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const dbRef = ref(db, 'board');
+
 const DAYS = ['월','화','수','목','금','토','일'];
 const COLORS = ['#378ADD','#1D9E75','#D85A30','#7F77DD','#BA7517','#D4537E'];
 
-function getMonday(d) {
-  const day = d.getDay();
-  const diff = day === 0 ? -6 : 1 - day;
-  const r = new Date(d);
-  r.setDate(d.getDate() + diff);
-  r.setHours(0,0,0,0);
-  return r;
-}
-function addDays(d, n) {
-  const r = new Date(d);
-  r.setDate(r.getDate() + n);
-  return r;
-}
-function fmtWeek(mon) {
-  const sun = addDays(mon, 6);
-  return `${mon.getFullYear()}년 ${mon.getMonth()+1}월 ${mon.getDate()}일 주`;
-}
-function dateKey(d) {
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-
-const today = new Date();
-today.setHours(0,0,0,0);
-let weekStart = getMonday(today);
-let uid = 10;
-
-let state = {
+const DEFAULT_STATE = {
   clients: [
-    {
-      id:'c1', name:'케이닥 꿀곰',
-      tasks:[
-        {id:'t1', title:'주간 하이라이트 영상', checks:{}},
-        {id:'t2', title:'캐릭터 소개 쇼츠', checks:{}}
-      ]
-    },
-    {
-      id:'c2', name:'씽크바이오 마린이',
-      tasks:[
-        {id:'t3', title:'해양생물 콘텐츠 #1', checks:{}},
-        {id:'t4', title:'브랜드 리뷰 영상', checks:{}}
-      ]
-    },
-    {
-      id:'c3', name:'클라이언트 C',
-      tasks:[
-        {id:'t5', title:'신규 영상 기획', checks:{}}
-      ]
-    }
+    { id:'c1', name:'케이닥 꿀곰', tasks:[{id:'t1',title:'주간 하이라이트 영상',checks:{}},{id:'t2',title:'캐릭터 소개 쇼츠',checks:{}}] },
+    { id:'c2', name:'씽크바이오 마린이', tasks:[{id:'t3',title:'해양생물 콘텐츠 #1',checks:{}},{id:'t4',title:'브랜드 리뷰 영상',checks:{}}] },
+    { id:'c3', name:'클라이언트 C', tasks:[{id:'t5',title:'신규 영상 기획',checks:{}}] }
   ]
 };
 
-// localStorage 저장/불러오기
-function save() {
-  try { localStorage.setItem('wt_state', JSON.stringify(state)); } catch(e){}
+function getMonday(d) {
+  const day = d.getDay(), diff = day===0?-6:1-day, r = new Date(d);
+  r.setDate(d.getDate()+diff); r.setHours(0,0,0,0); return r;
 }
-function load() {
-  try {
-    const s = localStorage.getItem('wt_state');
-    if(s) state = JSON.parse(s);
-  } catch(e){}
+function addDays(d,n) { const r=new Date(d); r.setDate(r.getDate()+n); return r; }
+function fmtWeek(mon) { return `${mon.getFullYear()}년 ${mon.getMonth()+1}월 ${mon.getDate()}일 주`; }
+function dateKey(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+const today = new Date(); today.setHours(0,0,0,0);
+let weekStart = getMonday(today);
+let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+let uid = 100;
+let saving = false;
+
+function saveToFirebase() {
+  if(saving) return;
+  saving = true;
+  set(dbRef, state).then(()=>{ saving=false; }).catch(()=>{ saving=false; });
 }
-load();
+
+function setSyncStatus(online) {
+  document.getElementById('sync-dot').className = 'sync-dot' + (online?'':' offline');
+  document.getElementById('sync-text').textContent = online ? '실시간 동기화 중' : '연결 끊김';
+}
+
+// 실시간 리스너
+onValue(dbRef, (snapshot) => {
+  setSyncStatus(true);
+  if(snapshot.exists()) {
+    state = snapshot.val();
+  } else {
+    set(dbRef, DEFAULT_STATE);
+    state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+  }
+  render();
+}, (error) => {
+  setSyncStatus(false);
+  render();
+});
 
 function render() {
   document.getElementById('week-label').textContent = fmtWeek(weekStart);
-
-  const weekDates = Array.from({length:7}, (_,i) => addDays(weekStart, i));
+  const weekDates = Array.from({length:7},(_,i)=>addDays(weekStart,i));
   const todayKey = dateKey(today);
   const board = document.getElementById('board');
   board.innerHTML = '';
+
+  if(!state.clients) state.clients = [];
 
   state.clients.forEach((client, ci) => {
     const color = COLORS[ci % COLORS.length];
     const block = document.createElement('div');
     block.className = 'client-block';
-
     block.innerHTML = `
       <div class="client-header">
         <div class="client-name-area">
           <div class="client-dot" style="background:${color};"></div>
-          <input class="client-name" value="${escHtml(client.name)}" data-cid="${client.id}" aria-label="클라이언트명" />
+          <input class="client-name" value="${escHtml(client.name)}" aria-label="클라이언트명" />
         </div>
         <div class="client-actions">
-          <button class="small-btn add-task-btn" data-cid="${client.id}">
-            <i class="ti ti-plus" style="font-size:11px;"></i> 작업 추가
-          </button>
-          <button class="del-client-btn" data-cid="${client.id}" title="클라이언트 삭제">
-            <i class="ti ti-x" style="font-size:12px;"></i>
-          </button>
+          <button class="small-btn add-task-btn"><i class="ti ti-plus" style="font-size:11px;"></i> 작업 추가</button>
+          <button class="del-client-btn"><i class="ti ti-x" style="font-size:12px;"></i></button>
         </div>
-      </div>
-    `;
+      </div>`;
 
     block.querySelector('.client-name').addEventListener('change', e => {
-      client.name = e.target.value; save();
+      client.name = e.target.value; saveToFirebase();
     });
     block.querySelector('.add-task-btn').addEventListener('click', () => {
-      client.tasks.push({id:'t'+(uid++), title:'새 작업', checks:{}});
-      save(); render();
+      if(!client.tasks) client.tasks = [];
+      client.tasks.push({id:'t'+(uid++),title:'새 작업',checks:{}});
+      saveToFirebase(); render();
     });
     block.querySelector('.del-client-btn').addEventListener('click', () => {
-      if(client.tasks.length > 0 && !confirm(`'${client.name}' 클라이언트를 삭제할까요?`)) return;
-      state.clients = state.clients.filter(c => c.id !== client.id);
-      save(); render();
+      if(client.tasks && client.tasks.length>0 && !confirm(`'${client.name}' 삭제할까요?`)) return;
+      state.clients = state.clients.filter(c=>c.id!==client.id);
+      saveToFirebase(); render();
     });
 
     const overflow = document.createElement('div');
     overflow.className = 'overflow-wrapper';
-
     const grid = document.createElement('div');
     grid.className = 'task-grid';
-    grid.style.display = 'grid';
 
-    // 헤더 행
     const spacer = document.createElement('div');
     spacer.className = 'col-header-spacer';
     spacer.textContent = '작업명';
     grid.appendChild(spacer);
 
-    weekDates.forEach((d, di) => {
-      const dk = dateKey(d);
-      const isToday = dk === todayKey;
+    weekDates.forEach((d,di) => {
+      const isToday = dateKey(d)===todayKey;
       const cell = document.createElement('div');
-      cell.className = 'day-header-cell' + (isToday ? ' today' : '');
+      cell.className = 'day-header-cell'+(isToday?' today':'');
       cell.innerHTML = `<span class="day-name">${DAYS[di]}</span><span class="day-num">${d.getDate()}</span>`;
       grid.appendChild(cell);
     });
 
-    // 태스크 행
-    client.tasks.forEach(task => {
-      const vCount = weekDates.filter(d => task.checks[dateKey(d)+'-v']).length;
-      const yCount = weekDates.filter(d => task.checks[dateKey(d)+'-y']).length;
+    (client.tasks||[]).forEach(task => {
+      if(!task.checks) task.checks = {};
+      const vCount = weekDates.filter(d=>task.checks[dateKey(d)+'-v']).length;
+      const yCount = weekDates.filter(d=>task.checks[dateKey(d)+'-y']).length;
 
       const labelWrap = document.createElement('div');
       labelWrap.className = 'task-label-wrap';
       labelWrap.innerHTML = `
         <div class="task-title-row">
           <input class="task-title-input" value="${escHtml(task.title)}" aria-label="작업명" />
-          <button class="del-task-btn" title="삭제"><i class="ti ti-x"></i></button>
+          <button class="del-task-btn"><i class="ti ti-x"></i></button>
         </div>
         <div class="status-badges">
           <span class="badge badge-video${vCount>0?' active':''}">영상 ${vCount}/7</span>
           <span class="badge badge-yt${yCount>0?' active':''}">YT ${yCount}/7</span>
-        </div>
-      `;
+        </div>`;
       labelWrap.querySelector('.task-title-input').addEventListener('change', e => {
-        task.title = e.target.value; save();
+        task.title = e.target.value; saveToFirebase();
       });
       labelWrap.querySelector('.del-task-btn').addEventListener('click', () => {
-        client.tasks = client.tasks.filter(t => t.id !== task.id);
-        save(); render();
+        client.tasks = client.tasks.filter(t=>t.id!==task.id);
+        saveToFirebase(); render();
       });
       grid.appendChild(labelWrap);
 
-      weekDates.forEach((d, di) => {
+      weekDates.forEach((d) => {
         const dk = dateKey(d);
-        const isToday = dk === todayKey;
-        const vk = dk+'-v', yk = dk+'-y';
-        const vOn = !!task.checks[vk], yOn = !!task.checks[yk];
-
+        const isToday = dk===todayKey;
+        const vk=dk+'-v', yk=dk+'-y';
         const cell = document.createElement('div');
-        cell.className = 'check-cell' + (isToday ? ' today-col' : '');
+        cell.className = 'check-cell'+(isToday?' today-col':'');
 
         const vBtn = document.createElement('div');
-        vBtn.className = 'check-icon' + (vOn ? ' cv' : '');
-        vBtn.title = '영상제작완료';
-        vBtn.setAttribute('role','checkbox');
-        vBtn.setAttribute('aria-checked', vOn);
-        vBtn.setAttribute('tabindex','0');
-        vBtn.innerHTML = `<i class="ti ti-check"></i>`;
-        vBtn.addEventListener('click', () => { task.checks[vk]=!task.checks[vk]; save(); render(); });
-        vBtn.addEventListener('keydown', e => { if(e.key===' '||e.key==='Enter'){vBtn.click();} });
+        vBtn.className = 'check-icon'+(task.checks[vk]?' cv':'');
+        vBtn.title='영상제작완료'; vBtn.setAttribute('role','checkbox'); vBtn.setAttribute('tabindex','0');
+        vBtn.innerHTML=`<i class="ti ti-check"></i>`;
+        vBtn.addEventListener('click',()=>{ task.checks[vk]=!task.checks[vk]; saveToFirebase(); render(); });
+        vBtn.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter')vBtn.click();});
 
-        const dot = document.createElement('div');
-        dot.className = 'sep-dot';
+        const dot = document.createElement('div'); dot.className='sep-dot';
 
         const yBtn = document.createElement('div');
-        yBtn.className = 'check-icon' + (yOn ? ' cy' : '');
-        yBtn.title = '유튜브업로드완료';
-        yBtn.setAttribute('role','checkbox');
-        yBtn.setAttribute('aria-checked', yOn);
-        yBtn.setAttribute('tabindex','0');
-        yBtn.innerHTML = `<i class="ti ti-brand-youtube"></i>`;
-        yBtn.addEventListener('click', () => { task.checks[yk]=!task.checks[yk]; save(); render(); });
-        yBtn.addEventListener('keydown', e => { if(e.key===' '||e.key==='Enter'){yBtn.click();} });
+        yBtn.className = 'check-icon'+(task.checks[yk]?' cy':'');
+        yBtn.title='유튜브업로드완료'; yBtn.setAttribute('role','checkbox'); yBtn.setAttribute('tabindex','0');
+        yBtn.innerHTML=`<i class="ti ti-brand-youtube"></i>`;
+        yBtn.addEventListener('click',()=>{ task.checks[yk]=!task.checks[yk]; saveToFirebase(); render(); });
+        yBtn.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter')yBtn.click();});
 
-        cell.appendChild(vBtn);
-        cell.appendChild(dot);
-        cell.appendChild(yBtn);
+        cell.appendChild(vBtn); cell.appendChild(dot); cell.appendChild(yBtn);
         grid.appendChild(cell);
       });
     });
@@ -586,18 +304,13 @@ function render() {
   });
 }
 
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-document.getElementById('prev-btn').addEventListener('click', () => { weekStart = addDays(weekStart,-7); render(); });
-document.getElementById('next-btn').addEventListener('click', () => { weekStart = addDays(weekStart, 7); render(); });
-document.getElementById('add-client-btn').addEventListener('click', () => {
-  state.clients.push({id:'c'+(uid++), name:'새 클라이언트', tasks:[{id:'t'+(uid++), title:'새 작업', checks:{}}]});
-  save(); render();
+document.getElementById('prev-btn').addEventListener('click',()=>{weekStart=addDays(weekStart,-7);render();});
+document.getElementById('next-btn').addEventListener('click',()=>{weekStart=addDays(weekStart,7);render();});
+document.getElementById('add-client-btn').addEventListener('click',()=>{
+  if(!state.clients) state.clients=[];
+  state.clients.push({id:'c'+(uid++),name:'새 클라이언트',tasks:[{id:'t'+(uid++),title:'새 작업',checks:{}}]});
+  saveToFirebase(); render();
 });
-
-render();
 </script>
 </body>
 </html>
