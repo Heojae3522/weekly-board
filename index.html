@@ -67,7 +67,7 @@
   .badge { font-size: 10px; padding: 1px 5px; border-radius: 3px; font-weight: 500; white-space: nowrap; border: 0.5px solid var(--border); background: var(--bg-secondary); color: var(--text-tertiary); }
   .badge-video.active { background: var(--green-fill); color: var(--green-text); border-color: var(--green-border); }
   .badge-yt.active { background: var(--red-fill); color: var(--red-text); border-color: var(--red-border); }
-  .check-cell { border-bottom: 0.5px solid var(--border); border-left: 0.5px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 5px 3px; }
+  .check-cell { border-bottom: 0.5px solid var(--border); border-left: 0.5px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 3px; padding: 5px 3px; }
   .task-row:last-child .check-cell { border-bottom: none; }
   .check-cell.today-col { background: rgba(23,93,185,0.03); }
   .check-icon { width: 18px; height: 18px; border-radius: 4px; border: 0.5px solid var(--border-hover); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.12s, border-color 0.12s; flex-shrink: 0; user-select: none; }
@@ -79,6 +79,25 @@
   .check-icon.cy { background: var(--red-fill); border-color: var(--red-border); }
   .check-icon.cy i { color: var(--red-text); }
   .sep-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+  .memo-input {
+    width: 100%;
+    font-size: 10px;
+    color: var(--text-secondary);
+    border: none;
+    border-top: 0.5px solid var(--border);
+    background: transparent;
+    outline: none;
+    padding: 3px 2px 1px;
+    font-family: inherit;
+    resize: none;
+    min-height: 18px;
+    line-height: 1.4;
+    text-align: center;
+    overflow: hidden;
+  }
+  .memo-input::placeholder { color: var(--text-tertiary); font-size: 9px; }
+  .memo-input:focus { background: var(--bg-secondary); border-radius: 2px; }
+  .memo-input.has-memo { color: var(--text-primary); }
   .legend { display: flex; align-items: center; gap: 14px; margin-top: 14px; padding-top: 12px; border-top: 0.5px solid var(--border); }
   .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-secondary); }
   .legend-box { width: 11px; height: 11px; border-radius: 3px; }
@@ -115,11 +134,15 @@
     <div class="legend-box" style="background:var(--red-fill);border:0.5px solid var(--red-border);"></div>
     유튜브업로드완료
   </div>
+  <div class="legend-item" style="color:var(--text-tertiary);">
+    <i class="ti ti-pencil" style="font-size:11px;"></i>
+    체크 아래 메모 입력 가능
+  </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD7xOzi7wuaJkmP2FNAKZTZr1lHYAMn8Ec",
@@ -141,16 +164,13 @@ const COLORS = ['#378ADD','#1D9E75','#D85A30','#7F77DD','#BA7517','#D4537E'];
 
 const DEFAULT_STATE = {
   clients: [
-    { id:'c1', name:'케이닥 꿀곰', tasks:[{id:'t1',title:'주간 하이라이트 영상',checks:{}},{id:'t2',title:'캐릭터 소개 쇼츠',checks:{}}] },
-    { id:'c2', name:'씽크바이오 마린이', tasks:[{id:'t3',title:'해양생물 콘텐츠 #1',checks:{}},{id:'t4',title:'브랜드 리뷰 영상',checks:{}}] },
-    { id:'c3', name:'클라이언트 C', tasks:[{id:'t5',title:'신규 영상 기획',checks:{}}] }
+    { id:'c1', name:'케이닥 꿀곰', tasks:[{id:'t1',title:'주간 하이라이트 영상',checks:{},memos:{}},{id:'t2',title:'캐릭터 소개 쇼츠',checks:{},memos:{}}] },
+    { id:'c2', name:'씽크바이오 마린이', tasks:[{id:'t3',title:'해양생물 콘텐츠 #1',checks:{},memos:{}},{id:'t4',title:'브랜드 리뷰 영상',checks:{},memos:{}}] },
+    { id:'c3', name:'클라이언트 C', tasks:[{id:'t5',title:'신규 영상 기획',checks:{},memos:{}}] }
   ]
 };
 
-function getMonday(d) {
-  const day = d.getDay(), diff = day===0?-6:1-day, r = new Date(d);
-  r.setDate(d.getDate()+diff); r.setHours(0,0,0,0); return r;
-}
+function getMonday(d) { const day=d.getDay(),diff=day===0?-6:1-day,r=new Date(d); r.setDate(d.getDate()+diff); r.setHours(0,0,0,0); return r; }
 function addDays(d,n) { const r=new Date(d); r.setDate(r.getDate()+n); return r; }
 function fmtWeek(mon) { return `${mon.getFullYear()}년 ${mon.getMonth()+1}월 ${mon.getDate()}일 주`; }
 function dateKey(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
@@ -160,33 +180,24 @@ const today = new Date(); today.setHours(0,0,0,0);
 let weekStart = getMonday(today);
 let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
 let uid = 100;
-let saving = false;
+let saveTimer = null;
 
 function saveToFirebase() {
-  if(saving) return;
-  saving = true;
-  set(dbRef, state).then(()=>{ saving=false; }).catch(()=>{ saving=false; });
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { set(dbRef, state); }, 600);
 }
 
 function setSyncStatus(online) {
-  document.getElementById('sync-dot').className = 'sync-dot' + (online?'':' offline');
+  document.getElementById('sync-dot').className = 'sync-dot'+(online?'':' offline');
   document.getElementById('sync-text').textContent = online ? '실시간 동기화 중' : '연결 끊김';
 }
 
-// 실시간 리스너
 onValue(dbRef, (snapshot) => {
   setSyncStatus(true);
-  if(snapshot.exists()) {
-    state = snapshot.val();
-  } else {
-    set(dbRef, DEFAULT_STATE);
-    state = JSON.parse(JSON.stringify(DEFAULT_STATE));
-  }
+  if(snapshot.exists()) { state = snapshot.val(); }
+  else { set(dbRef, DEFAULT_STATE); state = JSON.parse(JSON.stringify(DEFAULT_STATE)); }
   render();
-}, (error) => {
-  setSyncStatus(false);
-  render();
-});
+}, () => { setSyncStatus(false); render(); });
 
 function render() {
   document.getElementById('week-label').textContent = fmtWeek(weekStart);
@@ -194,7 +205,6 @@ function render() {
   const todayKey = dateKey(today);
   const board = document.getElementById('board');
   board.innerHTML = '';
-
   if(!state.clients) state.clients = [];
 
   state.clients.forEach((client, ci) => {
@@ -213,17 +223,15 @@ function render() {
         </div>
       </div>`;
 
-    block.querySelector('.client-name').addEventListener('change', e => {
-      client.name = e.target.value; saveToFirebase();
-    });
+    block.querySelector('.client-name').addEventListener('change', e => { client.name=e.target.value; saveToFirebase(); });
     block.querySelector('.add-task-btn').addEventListener('click', () => {
-      if(!client.tasks) client.tasks = [];
-      client.tasks.push({id:'t'+(uid++),title:'새 작업',checks:{}});
+      if(!client.tasks) client.tasks=[];
+      client.tasks.push({id:'t'+(uid++),title:'새 작업',checks:{},memos:{}});
       saveToFirebase(); render();
     });
     block.querySelector('.del-client-btn').addEventListener('click', () => {
-      if(client.tasks && client.tasks.length>0 && !confirm(`'${client.name}' 삭제할까요?`)) return;
-      state.clients = state.clients.filter(c=>c.id!==client.id);
+      if(client.tasks&&client.tasks.length>0&&!confirm(`'${client.name}' 삭제할까요?`)) return;
+      state.clients=state.clients.filter(c=>c.id!==client.id);
       saveToFirebase(); render();
     });
 
@@ -246,7 +254,8 @@ function render() {
     });
 
     (client.tasks||[]).forEach(task => {
-      if(!task.checks) task.checks = {};
+      if(!task.checks) task.checks={};
+      if(!task.memos) task.memos={};
       const vCount = weekDates.filter(d=>task.checks[dateKey(d)+'-v']).length;
       const yCount = weekDates.filter(d=>task.checks[dateKey(d)+'-y']).length;
 
@@ -261,11 +270,9 @@ function render() {
           <span class="badge badge-video${vCount>0?' active':''}">영상 ${vCount}/7</span>
           <span class="badge badge-yt${yCount>0?' active':''}">YT ${yCount}/7</span>
         </div>`;
-      labelWrap.querySelector('.task-title-input').addEventListener('change', e => {
-        task.title = e.target.value; saveToFirebase();
-      });
+      labelWrap.querySelector('.task-title-input').addEventListener('change', e => { task.title=e.target.value; saveToFirebase(); });
       labelWrap.querySelector('.del-task-btn').addEventListener('click', () => {
-        client.tasks = client.tasks.filter(t=>t.id!==task.id);
+        client.tasks=client.tasks.filter(t=>t.id!==task.id);
         saveToFirebase(); render();
       });
       grid.appendChild(labelWrap);
@@ -274,6 +281,8 @@ function render() {
         const dk = dateKey(d);
         const isToday = dk===todayKey;
         const vk=dk+'-v', yk=dk+'-y';
+        const memoVal = task.memos[dk] || '';
+
         const cell = document.createElement('div');
         cell.className = 'check-cell'+(isToday?' today-col':'');
 
@@ -293,7 +302,25 @@ function render() {
         yBtn.addEventListener('click',()=>{ task.checks[yk]=!task.checks[yk]; saveToFirebase(); render(); });
         yBtn.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter')yBtn.click();});
 
-        cell.appendChild(vBtn); cell.appendChild(dot); cell.appendChild(yBtn);
+        const memo = document.createElement('textarea');
+        memo.className = 'memo-input'+(memoVal?' has-memo':'');
+        memo.placeholder = '메모';
+        memo.value = memoVal;
+        memo.rows = 1;
+        memo.addEventListener('input', () => {
+          memo.style.height = 'auto';
+          memo.style.height = memo.scrollHeight+'px';
+          memo.className = 'memo-input'+(memo.value?' has-memo':'');
+        });
+        memo.addEventListener('change', () => {
+          task.memos[dk] = memo.value;
+          saveToFirebase();
+        });
+
+        cell.appendChild(vBtn);
+        cell.appendChild(dot);
+        cell.appendChild(yBtn);
+        cell.appendChild(memo);
         grid.appendChild(cell);
       });
     });
@@ -308,7 +335,7 @@ document.getElementById('prev-btn').addEventListener('click',()=>{weekStart=addD
 document.getElementById('next-btn').addEventListener('click',()=>{weekStart=addDays(weekStart,7);render();});
 document.getElementById('add-client-btn').addEventListener('click',()=>{
   if(!state.clients) state.clients=[];
-  state.clients.push({id:'c'+(uid++),name:'새 클라이언트',tasks:[{id:'t'+(uid++),title:'새 작업',checks:{}}]});
+  state.clients.push({id:'c'+(uid++),name:'새 클라이언트',tasks:[{id:'t'+(uid++),title:'새 작업',checks:{},memos:{}}]});
   saveToFirebase(); render();
 });
 </script>
