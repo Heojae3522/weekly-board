@@ -26,62 +26,103 @@
   }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Apple SD Gothic Neo', sans-serif; background: var(--bg-secondary); color: var(--text-primary); min-height: 100vh; padding: 20px 16px 40px; }
   .top-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-  .app-title { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+  .app-title { font-size: 15px; font-weight: 500; }
   .sync-status { font-size: 11px; color: var(--text-tertiary); display: flex; align-items: center; gap: 4px; }
   .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: #639922; }
   .sync-dot.offline { background: #E24B4A; }
   .week-nav { display: flex; align-items: center; gap: 6px; margin-left: auto; }
   .week-nav button { width: 28px; height: 28px; border-radius: var(--radius-md); border: 0.5px solid var(--border-hover); background: var(--bg); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 14px; transition: background 0.15s; }
   .week-nav button:hover { background: var(--bg-secondary); }
-  .week-label { font-size: 13px; font-weight: 500; color: var(--text-primary); min-width: 148px; text-align: center; }
+  .week-label { font-size: 13px; font-weight: 500; min-width: 148px; text-align: center; }
   .add-client-btn { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-secondary); border: 0.5px dashed var(--border-hover); border-radius: var(--radius-md); background: transparent; padding: 5px 12px; cursor: pointer; transition: background 0.12s; }
   .add-client-btn:hover { background: var(--bg); }
+
   .client-block { margin-bottom: 14px; border: 0.5px solid var(--border); border-radius: var(--radius-lg); background: var(--bg); overflow: hidden; }
   .client-header { display: flex; align-items: center; justify-content: space-between; padding: 9px 14px; background: var(--bg-secondary); border-bottom: 0.5px solid var(--border); }
   .client-name-area { display: flex; align-items: center; gap: 8px; }
   .client-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .client-name { font-size: 13px; font-weight: 500; color: var(--text-primary); border: none; background: transparent; outline: none; cursor: text; min-width: 60px; max-width: 180px; }
+  .client-name { font-size: 13px; font-weight: 500; color: var(--text-primary); border: none; background: transparent; outline: none; cursor: text; min-width: 60px; max-width: 200px; }
   .client-name:focus { background: var(--bg); border-radius: 4px; padding: 1px 5px; }
   .client-actions { display: flex; gap: 6px; align-items: center; }
   .small-btn { font-size: 11px; color: var(--text-secondary); border: 0.5px solid var(--border); border-radius: var(--radius-md); background: transparent; padding: 3px 8px; cursor: pointer; display: flex; align-items: center; gap: 3px; transition: background 0.1s; }
   .small-btn:hover { background: var(--bg-secondary); }
-  .del-client-btn { font-size: 11px; color: var(--text-tertiary); border: none; background: none; cursor: pointer; padding: 3px 5px; border-radius: var(--radius-md); transition: background 0.1s, color 0.1s; }
+  .del-client-btn { font-size: 11px; color: var(--text-tertiary); border: none; background: none; cursor: pointer; padding: 3px 5px; border-radius: var(--radius-md); }
   .del-client-btn:hover { background: #FCEBEB; color: #A32D2D; }
+
   .overflow-wrapper { overflow-x: auto; }
-  .task-grid { display: grid; grid-template-columns: 170px repeat(7, 1fr); font-size: 12px; min-width: 600px; }
+
+  /* 그리드: 라벨 열 + 7일 */
+  .task-grid { display: grid; grid-template-columns: 160px repeat(7, 1fr); font-size: 12px; min-width: 620px; }
+
+  /* 헤더 */
   .col-header-spacer { padding: 6px 12px; border-bottom: 0.5px solid var(--border); font-size: 11px; color: var(--text-tertiary); }
   .day-header-cell { padding: 5px 4px 6px; text-align: center; border-bottom: 0.5px solid var(--border); border-left: 0.5px solid var(--border); }
   .day-name { font-size: 10px; font-weight: 500; color: var(--text-tertiary); display: block; }
   .day-num { font-size: 13px; font-weight: 500; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; margin: 2px auto 0; border-radius: 50%; }
   .day-header-cell.today .day-name { color: var(--text-info); }
   .day-header-cell.today .day-num { background: var(--bg-info); color: var(--text-info); }
-  .task-label-wrap { display: flex; flex-direction: column; padding: 7px 10px 7px 12px; gap: 4px; border-bottom: 0.5px solid var(--border); position: relative; }
-  .task-row:last-child .task-label-wrap { border-bottom: none; }
+
+  /* 작업 블록 — 라벨 셀 */
+  .task-label-cell {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px 10px 8px 12px;
+    border-bottom: 0.5px solid var(--border);
+    /* 2행을 span */
+    grid-row: span 2;
+  }
+  .task-label-cell.last { border-bottom: none; }
   .task-title-row { display: flex; align-items: center; gap: 4px; }
   .task-title-input { font-size: 12px; color: var(--text-primary); border: none; background: transparent; outline: none; width: 100%; cursor: text; font-family: inherit; }
   .task-title-input:focus { background: var(--bg-secondary); border-radius: 3px; padding: 1px 4px; }
-  .del-task-btn { font-size: 10px; color: var(--text-tertiary); background: none; border: none; cursor: pointer; padding: 1px 2px; border-radius: 3px; opacity: 0; transition: opacity 0.1s; flex-shrink: 0; }
-  .task-label-wrap:hover .del-task-btn { opacity: 1; }
+  .del-task-btn { font-size: 10px; color: var(--text-tertiary); background: none; border: none; cursor: pointer; padding: 1px 2px; border-radius: 3px; opacity: 0; flex-shrink: 0; }
+  .task-label-cell:hover .del-task-btn { opacity: 1; }
   .del-task-btn:hover { color: #A32D2D; }
-  .status-badges { display: flex; gap: 4px; flex-wrap: wrap; }
+  .sub-badges { display: flex; gap: 4px; margin-top: 5px; flex-wrap: wrap; }
   .badge { font-size: 10px; padding: 1px 5px; border-radius: 3px; font-weight: 500; white-space: nowrap; border: 0.5px solid var(--border); background: var(--bg-secondary); color: var(--text-tertiary); }
   .badge-video.active { background: var(--green-fill); color: var(--green-text); border-color: var(--green-border); }
   .badge-yt.active { background: var(--red-fill); color: var(--red-text); border-color: var(--red-border); }
-  .check-cell { border-bottom: 0.5px solid var(--border); border-left: 0.5px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 3px; padding: 5px 3px; }
-  .task-row:last-child .check-cell { border-bottom: none; }
+
+  /* 제작/업로드 구분 행 레이블 */
+  .row-type-label {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 10px; font-weight: 500;
+    padding: 4px 3px 2px 12px;
+    color: var(--text-tertiary);
+    border-bottom: 0.5px solid var(--border);
+    grid-column: 1;
+  }
+  /* 마지막 작업의 두 번째 row-type은 border 없앰 */
+  .row-type-label.last { border-bottom: none; }
+
+  /* 체크 셀 */
+  .check-cell {
+    border-left: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 5px 3px 4px;
+  }
+  .check-cell.last { border-bottom: none; }
   .check-cell.today-col { background: rgba(23,93,185,0.03); }
-  .check-icon { width: 18px; height: 18px; border-radius: 4px; border: 0.5px solid var(--border-hover); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.12s, border-color 0.12s; flex-shrink: 0; user-select: none; }
-  .check-icon:hover { border-color: var(--border-hover); background: var(--bg-secondary); }
+
+  .check-icon { width: 18px; height: 18px; border-radius: 4px; border: 0.5px solid var(--border-hover); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.12s; flex-shrink: 0; user-select: none; }
+  .check-icon:hover { background: var(--bg-secondary); }
   .check-icon i { font-size: 11px; display: none; }
-  .check-icon.cv i, .check-icon.cy i { display: block; }
+  .check-icon.cv i { display: block; }
+  .check-icon.cy i { display: block; }
   .check-icon.cv { background: var(--green-fill); border-color: var(--green-border); }
   .check-icon.cv i { color: var(--green-text); }
   .check-icon.cy { background: var(--red-fill); border-color: var(--red-border); }
   .check-icon.cy i { color: var(--red-text); }
-  .sep-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+
   .memo-input {
     width: 100%;
-    font-size: 10px;
+    font-size: 12px;
     color: var(--text-secondary);
     border: none;
     border-top: 0.5px solid var(--border);
@@ -90,14 +131,15 @@
     padding: 3px 2px 1px;
     font-family: inherit;
     resize: none;
-    min-height: 18px;
+    min-height: 20px;
     line-height: 1.4;
     text-align: center;
     overflow: hidden;
   }
-  .memo-input::placeholder { color: var(--text-tertiary); font-size: 9px; }
+  .memo-input::placeholder { color: var(--text-tertiary); font-size: 11px; }
   .memo-input:focus { background: var(--bg-secondary); border-radius: 2px; }
-  .memo-input.has-memo { color: var(--text-primary); }
+  .memo-input.has-memo { color: var(--text-primary); font-weight: 500; }
+
   .legend { display: flex; align-items: center; gap: 14px; margin-top: 14px; padding-top: 12px; border-top: 0.5px solid var(--border); }
   .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-secondary); }
   .legend-box { width: 11px; height: 11px; border-radius: 3px; }
@@ -126,18 +168,8 @@
 
 <div class="legend">
   <span style="font-size:11px;color:var(--text-tertiary);">범례</span>
-  <div class="legend-item">
-    <div class="legend-box" style="background:var(--green-fill);border:0.5px solid var(--green-border);"></div>
-    영상제작완료
-  </div>
-  <div class="legend-item">
-    <div class="legend-box" style="background:var(--red-fill);border:0.5px solid var(--red-border);"></div>
-    유튜브업로드완료
-  </div>
-  <div class="legend-item" style="color:var(--text-tertiary);">
-    <i class="ti ti-pencil" style="font-size:11px;"></i>
-    체크 아래 메모 입력 가능
-  </div>
+  <div class="legend-item"><div class="legend-box" style="background:var(--green-fill);border:0.5px solid var(--green-border);"></div>영상제작완료</div>
+  <div class="legend-item"><div class="legend-box" style="background:var(--red-fill);border:0.5px solid var(--red-border);"></div>유튜브업로드완료</div>
 </div>
 
 <script type="module">
@@ -151,8 +183,7 @@ const firebaseConfig = {
   projectId: "weekly-board-4c870",
   storageBucket: "weekly-board-4c870.firebasestorage.app",
   messagingSenderId: "954997789363",
-  appId: "1:954997789363:web:5f241e872a775b549f56c6",
-  measurementId: "G-P748CHRQC2"
+  appId: "1:954997789363:web:5f241e872a775b549f56c6"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -164,169 +195,190 @@ const COLORS = ['#378ADD','#1D9E75','#D85A30','#7F77DD','#BA7517','#D4537E'];
 
 const DEFAULT_STATE = {
   clients: [
-    { id:'c1', name:'케이닥 꿀곰', tasks:[{id:'t1',title:'주간 하이라이트 영상',checks:{},memos:{}},{id:'t2',title:'캐릭터 소개 쇼츠',checks:{},memos:{}}] },
-    { id:'c2', name:'씽크바이오 마린이', tasks:[{id:'t3',title:'해양생물 콘텐츠 #1',checks:{},memos:{}},{id:'t4',title:'브랜드 리뷰 영상',checks:{},memos:{}}] },
-    { id:'c3', name:'클라이언트 C', tasks:[{id:'t5',title:'신규 영상 기획',checks:{},memos:{}}] }
+    { id:'c1', name:'케이닥 꿀곰', tasks:[
+      {id:'t1',title:'꿀곰 쇼츠',vchecks:{},ychecks:{},vmemos:{},ymemos:{}},
+      {id:'t2',title:'야옹s SOS',vchecks:{},ychecks:{},vmemos:{},ymemos:{}}
+    ]},
+    { id:'c2', name:'씽크바이오 마린이', tasks:[
+      {id:'t3',title:'마린이 쇼츠',vchecks:{},ychecks:{},vmemos:{},ymemos:{}}
+    ]},
+    { id:'c3', name:'클라이언트 C', tasks:[
+      {id:'t5',title:'신규 영상',vchecks:{},ychecks:{},vmemos:{},ymemos:{}}
+    ]}
   ]
 };
 
-function getMonday(d) { const day=d.getDay(),diff=day===0?-6:1-day,r=new Date(d); r.setDate(d.getDate()+diff); r.setHours(0,0,0,0); return r; }
-function addDays(d,n) { const r=new Date(d); r.setDate(r.getDate()+n); return r; }
-function fmtWeek(mon) { return `${mon.getFullYear()}년 ${mon.getMonth()+1}월 ${mon.getDate()}일 주`; }
-function dateKey(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function getMonday(d){const day=d.getDay(),diff=day===0?-6:1-day,r=new Date(d);r.setDate(d.getDate()+diff);r.setHours(0,0,0,0);return r;}
+function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
+function fmtWeek(mon){return `${mon.getFullYear()}년 ${mon.getMonth()+1}월 ${mon.getDate()}일 주`;}
+function dateKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-const today = new Date(); today.setHours(0,0,0,0);
-let weekStart = getMonday(today);
-let state = JSON.parse(JSON.stringify(DEFAULT_STATE));
-let uid = 100;
-let saveTimer = null;
+const today=new Date();today.setHours(0,0,0,0);
+let weekStart=getMonday(today);
+let state=JSON.parse(JSON.stringify(DEFAULT_STATE));
+let uid=100;
+let saveTimer=null;
 
-function saveToFirebase() {
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => { set(dbRef, state); }, 600);
-}
+function saveToFirebase(){clearTimeout(saveTimer);saveTimer=setTimeout(()=>{set(dbRef,state);},600);}
+function setSyncStatus(on){document.getElementById('sync-dot').className='sync-dot'+(on?'':' offline');document.getElementById('sync-text').textContent=on?'실시간 동기화 중':'연결 끊김';}
 
-function setSyncStatus(online) {
-  document.getElementById('sync-dot').className = 'sync-dot'+(online?'':' offline');
-  document.getElementById('sync-text').textContent = online ? '실시간 동기화 중' : '연결 끊김';
-}
-
-onValue(dbRef, (snapshot) => {
+onValue(dbRef,(snapshot)=>{
   setSyncStatus(true);
-  if(snapshot.exists()) { state = snapshot.val(); }
-  else { set(dbRef, DEFAULT_STATE); state = JSON.parse(JSON.stringify(DEFAULT_STATE)); }
+  if(snapshot.exists()){state=snapshot.val();}
+  else{set(dbRef,DEFAULT_STATE);state=JSON.parse(JSON.stringify(DEFAULT_STATE));}
   render();
-}, () => { setSyncStatus(false); render(); });
+},()=>{setSyncStatus(false);render();});
 
-function render() {
-  document.getElementById('week-label').textContent = fmtWeek(weekStart);
-  const weekDates = Array.from({length:7},(_,i)=>addDays(weekStart,i));
-  const todayKey = dateKey(today);
-  const board = document.getElementById('board');
-  board.innerHTML = '';
-  if(!state.clients) state.clients = [];
+function makeMemo(task, dk, type) {
+  const memoKey = type==='v'?'vmemos':'ymemos';
+  if(!task[memoKey]) task[memoKey]={};
+  const val = task[memoKey][dk]||'';
+  const el = document.createElement('textarea');
+  el.className='memo-input'+(val?' has-memo':'');
+  el.placeholder='메모';
+  el.value=val;
+  el.rows=1;
+  el.addEventListener('input',()=>{
+    el.style.height='auto';
+    el.style.height=el.scrollHeight+'px';
+    el.className='memo-input'+(el.value?' has-memo':'');
+  });
+  el.addEventListener('change',()=>{
+    task[memoKey][dk]=el.value;
+    saveToFirebase();
+  });
+  return el;
+}
 
-  state.clients.forEach((client, ci) => {
-    const color = COLORS[ci % COLORS.length];
-    const block = document.createElement('div');
-    block.className = 'client-block';
-    block.innerHTML = `
-      <div class="client-header">
-        <div class="client-name-area">
-          <div class="client-dot" style="background:${color};"></div>
-          <input class="client-name" value="${escHtml(client.name)}" aria-label="클라이언트명" />
-        </div>
-        <div class="client-actions">
-          <button class="small-btn add-task-btn"><i class="ti ti-plus" style="font-size:11px;"></i> 작업 추가</button>
-          <button class="del-client-btn"><i class="ti ti-x" style="font-size:12px;"></i></button>
-        </div>
+function render(){
+  document.getElementById('week-label').textContent=fmtWeek(weekStart);
+  const weekDates=Array.from({length:7},(_,i)=>addDays(weekStart,i));
+  const todayKey=dateKey(today);
+  const board=document.getElementById('board');
+  board.innerHTML='';
+  if(!state.clients) state.clients=[];
+
+  state.clients.forEach((client,ci)=>{
+    const color=COLORS[ci%COLORS.length];
+    const block=document.createElement('div');
+    block.className='client-block';
+
+    // 헤더
+    const hdr=document.createElement('div');
+    hdr.className='client-header';
+    hdr.innerHTML=`
+      <div class="client-name-area">
+        <div class="client-dot" style="background:${color};"></div>
+        <input class="client-name" value="${escHtml(client.name)}" aria-label="클라이언트명" />
+      </div>
+      <div class="client-actions">
+        <button class="small-btn add-task-btn"><i class="ti ti-plus" style="font-size:11px;"></i> 작업 추가</button>
+        <button class="del-client-btn"><i class="ti ti-x" style="font-size:12px;"></i></button>
       </div>`;
-
-    block.querySelector('.client-name').addEventListener('change', e => { client.name=e.target.value; saveToFirebase(); });
-    block.querySelector('.add-task-btn').addEventListener('click', () => {
-      if(!client.tasks) client.tasks=[];
-      client.tasks.push({id:'t'+(uid++),title:'새 작업',checks:{},memos:{}});
-      saveToFirebase(); render();
+    hdr.querySelector('.client-name').addEventListener('change',e=>{client.name=e.target.value;saveToFirebase();});
+    hdr.querySelector('.add-task-btn').addEventListener('click',()=>{
+      if(!client.tasks)client.tasks=[];
+      client.tasks.push({id:'t'+(uid++),title:'새 작업',vchecks:{},ychecks:{},vmemos:{},ymemos:{}});
+      saveToFirebase();render();
     });
-    block.querySelector('.del-client-btn').addEventListener('click', () => {
-      if(client.tasks&&client.tasks.length>0&&!confirm(`'${client.name}' 삭제할까요?`)) return;
+    hdr.querySelector('.del-client-btn').addEventListener('click',()=>{
+      if(client.tasks&&client.tasks.length>0&&!confirm(`'${client.name}' 삭제?`))return;
       state.clients=state.clients.filter(c=>c.id!==client.id);
-      saveToFirebase(); render();
+      saveToFirebase();render();
     });
+    block.appendChild(hdr);
 
-    const overflow = document.createElement('div');
-    overflow.className = 'overflow-wrapper';
-    const grid = document.createElement('div');
-    grid.className = 'task-grid';
+    const ow=document.createElement('div');
+    ow.className='overflow-wrapper';
+    const grid=document.createElement('div');
+    grid.className='task-grid';
 
-    const spacer = document.createElement('div');
-    spacer.className = 'col-header-spacer';
-    spacer.textContent = '작업명';
+    // 날짜 헤더행
+    const spacer=document.createElement('div');
+    spacer.className='col-header-spacer';
+    spacer.textContent='작업명';
     grid.appendChild(spacer);
-
-    weekDates.forEach((d,di) => {
-      const isToday = dateKey(d)===todayKey;
-      const cell = document.createElement('div');
-      cell.className = 'day-header-cell'+(isToday?' today':'');
-      cell.innerHTML = `<span class="day-name">${DAYS[di]}</span><span class="day-num">${d.getDate()}</span>`;
-      grid.appendChild(cell);
+    weekDates.forEach((d,di)=>{
+      const isToday=dateKey(d)===todayKey;
+      const c=document.createElement('div');
+      c.className='day-header-cell'+(isToday?' today':'');
+      c.innerHTML=`<span class="day-name">${DAYS[di]}</span><span class="day-num">${d.getDate()}</span>`;
+      grid.appendChild(c);
     });
 
-    (client.tasks||[]).forEach(task => {
-      if(!task.checks) task.checks={};
-      if(!task.memos) task.memos={};
-      const vCount = weekDates.filter(d=>task.checks[dateKey(d)+'-v']).length;
-      const yCount = weekDates.filter(d=>task.checks[dateKey(d)+'-y']).length;
+    const tasks=client.tasks||[];
+    tasks.forEach((task,ti)=>{
+      if(!task.vchecks)task.vchecks={};
+      if(!task.ychecks)task.ychecks={};
+      if(!task.vmemos)task.vmemos={};
+      if(!task.ymemos)task.ymemos={};
 
-      const labelWrap = document.createElement('div');
-      labelWrap.className = 'task-label-wrap';
-      labelWrap.innerHTML = `
+      const isLastTask=(ti===tasks.length-1);
+      const vCount=weekDates.filter(d=>task.vchecks[dateKey(d)]).length;
+      const yCount=weekDates.filter(d=>task.ychecks[dateKey(d)]).length;
+
+      // 라벨 셀 (2행 span)
+      const labelCell=document.createElement('div');
+      labelCell.className='task-label-cell'+(isLastTask?' last':'');
+      labelCell.style.gridRow='span 2';
+      labelCell.innerHTML=`
         <div class="task-title-row">
           <input class="task-title-input" value="${escHtml(task.title)}" aria-label="작업명" />
           <button class="del-task-btn"><i class="ti ti-x"></i></button>
         </div>
-        <div class="status-badges">
-          <span class="badge badge-video${vCount>0?' active':''}">영상 ${vCount}/7</span>
-          <span class="badge badge-yt${yCount>0?' active':''}">YT ${yCount}/7</span>
+        <div class="sub-badges">
+          <span class="badge badge-video${vCount>0?' active':''}">제작 ${vCount}/7</span>
+          <span class="badge badge-yt${yCount>0?' active':''}">업로드 ${yCount}/7</span>
         </div>`;
-      labelWrap.querySelector('.task-title-input').addEventListener('change', e => { task.title=e.target.value; saveToFirebase(); });
-      labelWrap.querySelector('.del-task-btn').addEventListener('click', () => {
+      labelCell.querySelector('.task-title-input').addEventListener('change',e=>{task.title=e.target.value;saveToFirebase();});
+      labelCell.querySelector('.del-task-btn').addEventListener('click',()=>{
         client.tasks=client.tasks.filter(t=>t.id!==task.id);
-        saveToFirebase(); render();
+        saveToFirebase();render();
       });
-      grid.appendChild(labelWrap);
+      grid.appendChild(labelCell);
 
-      weekDates.forEach((d) => {
-        const dk = dateKey(d);
-        const isToday = dk===todayKey;
-        const vk=dk+'-v', yk=dk+'-y';
-        const memoVal = task.memos[dk] || '';
+      // 제작 행 — 체크+메모 셀 7개
+      weekDates.forEach((d)=>{
+        const dk=dateKey(d);
+        const isToday=dk===todayKey;
+        const cell=document.createElement('div');
+        cell.className='check-cell'+(isToday?' today-col':'');
 
-        const cell = document.createElement('div');
-        cell.className = 'check-cell'+(isToday?' today-col':'');
+        const btn=document.createElement('div');
+        btn.className='check-icon'+(task.vchecks[dk]?' cv':'');
+        btn.title='영상제작완료';btn.setAttribute('role','checkbox');btn.setAttribute('tabindex','0');
+        btn.innerHTML=`<i class="ti ti-check"></i>`;
+        btn.addEventListener('click',()=>{task.vchecks[dk]=!task.vchecks[dk];saveToFirebase();render();});
+        btn.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter')btn.click();});
 
-        const vBtn = document.createElement('div');
-        vBtn.className = 'check-icon'+(task.checks[vk]?' cv':'');
-        vBtn.title='영상제작완료'; vBtn.setAttribute('role','checkbox'); vBtn.setAttribute('tabindex','0');
-        vBtn.innerHTML=`<i class="ti ti-check"></i>`;
-        vBtn.addEventListener('click',()=>{ task.checks[vk]=!task.checks[vk]; saveToFirebase(); render(); });
-        vBtn.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter')vBtn.click();});
+        cell.appendChild(btn);
+        cell.appendChild(makeMemo(task,dk,'v'));
+        grid.appendChild(cell);
+      });
 
-        const dot = document.createElement('div'); dot.className='sep-dot';
+      // 업로드 행 — 체크+메모 셀 7개
+      weekDates.forEach((d)=>{
+        const dk=dateKey(d);
+        const isToday=dk===todayKey;
+        const cell=document.createElement('div');
+        cell.className='check-cell'+(isToday?' today-col':'')+(isLastTask?' last':'');
 
-        const yBtn = document.createElement('div');
-        yBtn.className = 'check-icon'+(task.checks[yk]?' cy':'');
-        yBtn.title='유튜브업로드완료'; yBtn.setAttribute('role','checkbox'); yBtn.setAttribute('tabindex','0');
-        yBtn.innerHTML=`<i class="ti ti-brand-youtube"></i>`;
-        yBtn.addEventListener('click',()=>{ task.checks[yk]=!task.checks[yk]; saveToFirebase(); render(); });
-        yBtn.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter')yBtn.click();});
+        const btn=document.createElement('div');
+        btn.className='check-icon'+(task.ychecks[dk]?' cy':'');
+        btn.title='유튜브업로드완료';btn.setAttribute('role','checkbox');btn.setAttribute('tabindex','0');
+        btn.innerHTML=`<i class="ti ti-brand-youtube"></i>`;
+        btn.addEventListener('click',()=>{task.ychecks[dk]=!task.ychecks[dk];saveToFirebase();render();});
+        btn.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter')btn.click();});
 
-        const memo = document.createElement('textarea');
-        memo.className = 'memo-input'+(memoVal?' has-memo':'');
-        memo.placeholder = '메모';
-        memo.value = memoVal;
-        memo.rows = 1;
-        memo.addEventListener('input', () => {
-          memo.style.height = 'auto';
-          memo.style.height = memo.scrollHeight+'px';
-          memo.className = 'memo-input'+(memo.value?' has-memo':'');
-        });
-        memo.addEventListener('change', () => {
-          task.memos[dk] = memo.value;
-          saveToFirebase();
-        });
-
-        cell.appendChild(vBtn);
-        cell.appendChild(dot);
-        cell.appendChild(yBtn);
-        cell.appendChild(memo);
+        cell.appendChild(btn);
+        cell.appendChild(makeMemo(task,dk,'y'));
         grid.appendChild(cell);
       });
     });
 
-    overflow.appendChild(grid);
-    block.appendChild(overflow);
+    ow.appendChild(grid);
+    block.appendChild(ow);
     board.appendChild(block);
   });
 }
@@ -334,9 +386,9 @@ function render() {
 document.getElementById('prev-btn').addEventListener('click',()=>{weekStart=addDays(weekStart,-7);render();});
 document.getElementById('next-btn').addEventListener('click',()=>{weekStart=addDays(weekStart,7);render();});
 document.getElementById('add-client-btn').addEventListener('click',()=>{
-  if(!state.clients) state.clients=[];
-  state.clients.push({id:'c'+(uid++),name:'새 클라이언트',tasks:[{id:'t'+(uid++),title:'새 작업',checks:{},memos:{}}]});
-  saveToFirebase(); render();
+  if(!state.clients)state.clients=[];
+  state.clients.push({id:'c'+(uid++),name:'새 클라이언트',tasks:[{id:'t'+(uid++),title:'새 작업',vchecks:{},ychecks:{},vmemos:{},ymemos:{}}]});
+  saveToFirebase();render();
 });
 </script>
 </body>
